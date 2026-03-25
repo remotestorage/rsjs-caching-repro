@@ -20,6 +20,8 @@ const crud = {
 
         addItem: object => privateClient.storeObject('crud-item', `${ rid() }/${ rid() }`, object),
 
+        getItem: path => privateClient.getObject(path),
+
         removeItem: privateClient.remove.bind(privateClient),
 
         getAllItems: () => privateClient.getAll('', false),
@@ -83,7 +85,15 @@ const view = {
   renderItems: () => api.crud.getAllItems().then(items => {
     document.querySelector('ul').innerHTML = '';
 
-    items.forEach(e => view.renderItem(e, items[e]));
+    Object.entries(items).forEach(([parent, value]) => {
+      Object.entries(value).forEach(([child, value]) => {
+        if (!value)
+          return
+
+        const id = parent + child;
+        api.crud.getItem(id).then(object => view.renderItem(id, object))
+      });
+    });
   }),
 
   _li: id => document.querySelector(`li[data-id="${ id }"]`),
@@ -124,6 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
 
       api.crud.addItem({ name: rid() });
+    };
+
+    document.getElementById('direct').onclick = event => {
+      event.preventDefault();
+
+      view.renderItems();
     };
 
     document.getElementById('reset').onclick = event => {
