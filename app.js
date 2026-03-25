@@ -1,4 +1,4 @@
-const rid = () => Math.random().toString(36).slice(2);
+const rid = () => Math.random().toString().slice(-3);
 function yamlify (obj, indent = 0) {
   const spaces = ' '.repeat(indent);
   const size = 2;
@@ -40,7 +40,7 @@ const crud = {
 
         handle: privateClient.on,
 
-        addItem: object => privateClient.storeObject('crud-item', `${ rid() }/${ rid() }`, object),
+        addItem: object => privateClient.storeObject('crud-item', `f${ rid() }/d${ rid().slice(0, -1) }`, object),
 
         getItem: path => privateClient.getObject(path),
 
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('add').onclick = event => {
       event.preventDefault();
 
-      api.crud.addItem({ name: rid() });
+      api.crud.addItem({ name: parseInt(rid()).toString(36) });
     };
 
     document.getElementById('direct').onclick = event => {
