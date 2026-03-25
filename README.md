@@ -1,5 +1,5 @@
-# rs-cache-repro
+# sync-cache-watch
 
-tries to reproduce sync/cache issue [#1188](https://github.com/remotestorage/remotestorage.js/issues/1188)
+Reproduces sync/cache issue [#1188](https://github.com/remotestorage/remotestorage.js/issues/1188).
 
-https://remotestorage.github.io/rsjs-caching-repro/
+https://remotestorage.github.io/sync-cache-watch/
